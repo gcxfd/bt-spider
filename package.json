@@ -1,0 +1,15 @@
+{
+  "name": "bt-spider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:gcxfd/bt-spider.git",
+  "author": "gcxfd <i@rmw.link>",
+  "license": "MIT",
+  "dependencies": {
+    "@rmw/thisfile": "^0.0.2",
+    "coffeescript": "^2.5.1",
+    "readlin": "^1.0.3",
+    "readline": "^1.3.0",
+    "source-map-support": "^0.5.19"
+  }
+}
