@@ -31,7 +31,7 @@ cmp = (a,b)=>
   a[1]-b[1]
 
 do =>
-  count = streamcount.createViewsCounter(254)
+  count = streamcount.createViewsCounter(512)
 
   count_txt = (f)=>
     if not f.endsWith('.txt')
@@ -40,17 +40,16 @@ do =>
     txt = await fs.readFile(f, 'utf8')
 
     for i from take1_7(txt)
-      n = i.length
-      while n--
+      n = i.length/7
+      if Math.random() <= n
         count.increment(i)
 
   for await f from walk('txt')
     console.log f
     await count_txt(f)
 
-
   n = 0
-  for i from count.getTopK()
+  for i from count.getTopK()[..255]
     console.log ++n, i
 
 
