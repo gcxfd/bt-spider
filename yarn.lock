@@ -44,3 +44,8 @@ source-map@^0.6.0:
   version "0.6.1"
   resolved "https://registry.nlark.com/source-map/download/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha1-dHIq8y6WFOnCh6jQu95IteLxomM=
+
+streamcount@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.nlark.com/streamcount/download/streamcount-1.0.1.tgz#e2a523906b35e70eb83ce564dfb169b4628ebe49"
+  integrity sha1-4qUjkGs15w64POVk37FptGKOvkk=

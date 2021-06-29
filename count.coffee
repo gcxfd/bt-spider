@@ -2,7 +2,7 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import Heap from 'heap'
+import streamcount from 'streamcount'
 
 take = (s, n)->
   begin = 0
@@ -31,7 +31,7 @@ cmp = (a,b)=>
   a[1]-b[1]
 
 do =>
-  count = new Map()
+  count = streamcount.createViewsCounter(254)
 
   count_txt = (f)=>
     if not f.endsWith('.txt')
@@ -40,31 +40,17 @@ do =>
     txt = await fs.readFile(f, 'utf8')
 
     for i from take1_7(txt)
-      count.set(
-        i
-        (count.get(i) or 0)+i.length
-      )
+      n = i.length
+      while n--
+        count.increment(i)
 
   for await f from walk('txt')
     console.log f
     await count_txt(f)
 
-  heap = new Heap(cmp)
-  for i in [0..254]
-    heap.push [0,0]
 
-  small = 0
-
-  sort = []
-  for i from count.entries()
-    v = i[1]
-    if v > small
-      small = heap.pushpop(i)[1]
-
-  heap = heap.toArray()
-  heap.sort cmp
   n = 0
-  for i from heap
+  for i from count.getTopK()
     console.log ++n, i
 
 
