@@ -17,6 +17,17 @@ parse_log = (log)=>
     if line.length <= 2
       continue
     line = JSON.parse(line)
+
+    if not line.files
+      continue
+
+    n = 0
+    for i from line.files
+      n += i.length
+
+    if n < 1024*1024*100
+      continue
+
     hash = line.infohash
     [name, count] = bt.get(hash) or ['',0]
     name = line.name
