@@ -1,3 +1,5 @@
+zstd.dict
+txt/
 node_modules/
 spider
 *.out
