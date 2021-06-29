@@ -22,7 +22,7 @@ parse_log = (log)=>
     name = line.name
     bt.set(hash, [name,count+1])
   bt = Array.from(bt.entries())
-  bt.sort (a,b)=>
+  bt.sort (b,a)=>
     a[1][1]-b[1][1]
   for line from bt[..100]
     console.log line[0],line[1].join(' ')
