@@ -25,7 +25,7 @@ parse_log = (log)=>
   bt.sort (a,b)=>
     a[1][1]-b[1][1]
   for line from bt[..100]
-    console.log line[0],line[1][0]
+    console.log line[0],line[1].join(' ')
 
 
 
