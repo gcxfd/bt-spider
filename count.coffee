@@ -45,24 +45,28 @@ do =>
 
 
   file_count = 0
-  for await f from walk('/Users/z/git/bt-spider/data/txt')
-    if not f.endsWith('.txt')
-      continue
-    ++ file_count
-    console.log file_count, f
-    if file_count  % 1000 == 999
-      for [k,v] from count.entries()
-        if v < 10
-          count.delete(k)
-        else
-          count.set(k,v-10)
-    await count_txt(f)
+  for dir in [
+    '/Users/z/git/bt-spider/txt'
+    '/Users/z/git/bt-spider/data/txt'
+  ]
+    for await f from walk(dir)
+      if not f.endsWith('.txt')
+        continue
+      ++ file_count
+      console.log file_count, f
+      if file_count  % 1000 == 999
+        for [k,v] from count.entries()
+          if v < 10
+            count.delete(k)
+          else
+            count.set(k,v-10)
+      await count_txt(f)
 
 
   li = Array.from count.entries()
   li.sort cmp
 
-  for i, n in li[..255]
+  for i, n in li[..65792]
     console.log n, i
 
 
