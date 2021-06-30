@@ -22,7 +22,7 @@ walk = (dir)->
   for await d from await fs.opendir(dir)
     entry = path.join(dir, d.name)
     if d.isDirectory()
-      yield* walk(entry)
+      `yield* walk(entry)`
     else if d.isFile()
       yield entry
 
@@ -33,9 +33,6 @@ do =>
   count = new Map()
 
   count_txt = (f)=>
-    if not f.endsWith('.txt')
-      return
-
     txt = await fs.readFile(f, 'utf8')
 
     for i from take1_7(txt)
@@ -48,15 +45,17 @@ do =>
 
 
   file_count = 0
-  for await f from walk('txt')
+  for await f from walk('/Users/z/git/bt-spider/data/txt')
+    if not f.endsWith('.txt')
+      continue
     ++ file_count
+    console.log file_count, f
     if file_count  % 1000 == 999
       for [k,v] from count.entries()
         if v < 10
           count.delete(k)
         else
           count.set(k,v-10)
-    console.log file_count, f
     await count_txt(f)
 
 
