@@ -2,7 +2,6 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import streamcount from 'streamcount'
 
 take = (s, n)->
   begin = 0
@@ -27,11 +26,11 @@ walk = (dir)->
     else if d.isFile()
       yield entry
 
-cmp = (a,b)=>
+cmp = (b,a)=>
   a[1]-b[1]
 
 do =>
-  count = streamcount.createViewsCounter(512)
+  count = new Map()
 
   count_txt = (f)=>
     if not f.endsWith('.txt')
@@ -42,15 +41,30 @@ do =>
     for i from take1_7(txt)
       n = i.length/7
       if Math.random() <= n
-        count.increment(i)
+        count.set(
+          i
+          (count.get(i) or 0)+1
+        )
 
+
+  file_count = 0
   for await f from walk('txt')
-    console.log f
+    ++ file_count
+    if file_count  % 1000 == 999
+      for [k,v] from count.entries()
+        if v < 10
+          count.delete(k)
+        else
+          count.set(k,v-10)
+    console.log file_count, f
     await count_txt(f)
 
-  n = 0
-  for i from count.getTopK()[..255]
-    console.log ++n, i
+
+  li = Array.from count.entries()
+  li.sort cmp
+
+  for i, n in li[..255]
+    console.log n, i
 
 
 
