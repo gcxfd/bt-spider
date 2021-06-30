@@ -53,7 +53,9 @@ do =>
       if not f.endsWith('.txt')
         continue
       ++ file_count
-      console.log file_count, f
+      # data/txt/pansci.asia
+      console.log "cat #{f} >> 1.txt"
+      continue
       if file_count  % 1000 == 999
         for [k,v] from count.entries()
           if v < 10
@@ -62,7 +64,7 @@ do =>
             count.set(k,v-10)
       await count_txt(f)
 
-
+  return
   li = Array.from count.entries()
   li.sort cmp
 

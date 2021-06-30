@@ -10,6 +10,8 @@ DIR = thisdir(`import.meta`)
 
 parse_log = (log)=>
   exist_bt = new Set()
+  txtli = []
+  n = 0
   for await line from readline.createInterface({
     input: fs.createReadStream(log)
     crlfDelay: Infinity
@@ -44,11 +46,18 @@ parse_log = (log)=>
     if not name_exist
        pli.unshift name
 
-    await writeFile(
-      path.join(DIR,"txt/#{exist_bt.size}.txt")
-      pli.join("\n")
-    )
-    console.log pli
+    txtli = txtli.concat pli
+    if (++n)%1000 == 0
+      await writeFile(
+        path.join(DIR,"txt/#{n}.txt")
+        txtli.join("\n")
+      )
+      txtli = []
+  await writeFile(
+    path.join(DIR,"txt/#{n}.txt")
+    txtli.join("\n")
+  )
+
 
 
 
