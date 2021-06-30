@@ -46,15 +46,15 @@ do =>
 
   file_count = 0
   for dir in [
-    '/Users/z/git/bt-spider/txt'
+    #    '/Users/z/git/bt-spider/txt'
     '/Users/z/git/bt-spider/data/txt'
   ]
+    console.log dir
     for await f from walk(dir)
       if not f.endsWith('.txt')
         continue
       ++ file_count
-      # data/txt/pansci.asia
-      console.log "cat #{f} >> 1.txt"
+      console.log "cat #{f} >> #{f.split('/')[7]}.txt"
       continue
       if file_count  % 1000 == 999
         for [k,v] from count.entries()

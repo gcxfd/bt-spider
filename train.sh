@@ -5,4 +5,4 @@ set -ex
 cd $DIR
 
 #./parse.coffee ./log/20210629.log
-zstd --train ./txt/* -o zstd.dict
+zstd --train-cover=d=3 --train ./txt/*.txt -o zstd.dict
